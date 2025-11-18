@@ -122,6 +122,41 @@ app.delete("/api/tasks/:id", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+//POST /api/sessions
+app.post("/api/sessions", async (req, res) => {
+  try {
+    const { taskId, duration, startTime, completed } = req.body;
+
+    if (!taskId || !duration || !startTime) {
+      return res
+        .status(400)
+        .json({ error: "taskId, duration, and startTime are required" });
+    }
+
+    const session = await Session.create({
+      taskId,
+      duration,
+      startTime,
+      completed,
+    });
+
+    res.status(201).json(session);
+  } catch (err) {
+    console.error("Error creating session:", err);
+    res.status(400).json({ error: "Could not create session" });
+  }
+});
+
+//GET /api/sessions
+app.get("/api/sessions", async (req, res) => {
+  try {
+    const sessions = await Session.find().populate("taskId");
+    res.status(200).json(sessions);
+  } catch (err) {
+    console.error("Error fetching sessions:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
