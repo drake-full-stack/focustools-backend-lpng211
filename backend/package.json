@@ -4,11 +4,13 @@
   "description": "FocusTools Backend API with MongoDB",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mongoose": "^8.0.0",
-    "dotenv": "^16.3.1"
+    "mongoose": "^8.0.0"
   }
 }
